@@ -1,7 +1,7 @@
-const { GoogleGenAI } = require("@google/genai");
-const { z } = require("zod/v3");
-const { zodToJsonSchema } = require("zod-to-json-schema");
-const generatePdfFromHtml = require("./pdfgeneration.service");
+import { GoogleGenAI } from "@google/genai";
+import { z } from "zod/v3";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import generatePdfFromHtml from "./pdfgeneration.service.js";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
 
@@ -389,4 +389,7 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
   }
 }
 
-module.exports = { generateInterviewReport, generateResumePdf };
+export {
+  generateInterviewReport,
+  generateResumePdf,
+};

@@ -1,7 +1,19 @@
-const express = require("express");
-const authMiddleware = require("../middlewares/auth.middleware");
-const {upload} = require("../middlewares/file.middleware");
-const interviewController = require("../controllers/interviewReport.controller");
+import express from "express";
+import { authUser } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/file.middleware.js";
+import {
+  generateInterviewReportController,
+  getInterviewReportByIdController,
+  getAllInterviewReportsController,
+  generateResumePdfController,
+} from "../controllers/interviewReport.controller.js";
+
+const interviewController = {
+  generateInterviewReportController,
+  getInterviewReportByIdController,
+  getAllInterviewReportsController,
+  generateResumePdfController,
+};
 
 
 const interviewRouter = express.Router();
@@ -13,7 +25,7 @@ const interviewRouter = express.Router();
  * @body { selfDescription: string, resume: pdf file, jobDescription: string }
  * @access Private
  */
-interviewRouter.post("/generate", authMiddleware.authUser, upload.single("resume"), interviewController.generateInterviewReportController);
+interviewRouter.post("/generate",authUser, upload.single("resume"), interviewController.generateInterviewReportController);
 
 
 /**
@@ -21,7 +33,7 @@ interviewRouter.post("/generate", authMiddleware.authUser, upload.single("resume
  * @desc Get an interview report by its ID
  * @access Private
  */
-interviewRouter.get("/report/:interviewId", authMiddleware.authUser, interviewController.getInterviewReportByIdController);
+interviewRouter.get("/report/:interviewId", authUser, interviewController.getInterviewReportByIdController);
 
 
 /**
@@ -29,7 +41,7 @@ interviewRouter.get("/report/:interviewId", authMiddleware.authUser, interviewCo
  * @desc Get all interview reports for the authenticated user
  * @access Private
  */
-interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInterviewReportsController);
+interviewRouter.get("/", authUser, interviewController.getAllInterviewReportsController);
 
 
 /**
@@ -37,6 +49,6 @@ interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInte
  * @description generate resume pdf on the basis of user self description, resume content and job description.
  * @access private
  */
-interviewRouter.post("/resume/pdf/:interviewReportId", authMiddleware.authUser, interviewController.generateResumePdfController)
+interviewRouter.post("/resume/pdf/:interviewReportId", authUser, interviewController.generateResumePdfController)
 
-module.exports = interviewRouter;
+export default interviewRouter;

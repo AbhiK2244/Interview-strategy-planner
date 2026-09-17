@@ -1,6 +1,18 @@
-const express = require("express");
-const authController = require("../controllers/auth.controller");
-const authMiddleware = require("../middlewares/auth.middleware");
+import express from "express";
+import {
+  registerUserController,
+  loginUserController,
+  logoutUserController,
+  getMeController,
+} from "../controllers/auth.controller.js";
+import { authUser } from "../middlewares/auth.middleware.js";
+
+const authController = {
+  registerUserController,
+  loginUserController,
+  logoutUserController,
+  getMeController,
+};
 
 const authRouter = express.Router();
 
@@ -30,6 +42,6 @@ authRouter.get("/logout", authController.logoutUserController);
  * @desc Get the current user information
  * @access Private
  */
-authRouter.get("/get-me", authMiddleware.authUser, authController.getMeController);
+authRouter.get("/get-me", authUser, authController.getMeController);
 
-module.exports = authRouter; 
+export default authRouter;

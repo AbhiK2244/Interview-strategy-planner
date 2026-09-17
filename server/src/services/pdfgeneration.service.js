@@ -1,8 +1,10 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
 
 async function generatePdfFromHtml(htmlContent) {
   const browser = await puppeteer.launch();
+
   const page = await browser.newPage();
+
   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
   const pdfBuffer = await page.pdf({
@@ -20,4 +22,4 @@ async function generatePdfFromHtml(htmlContent) {
   return pdfBuffer;
 }
 
-module.exports = generatePdfFromHtml;
+export default generatePdfFromHtml;

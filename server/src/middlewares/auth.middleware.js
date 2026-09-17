@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const tokenBlacklistModel = require("../models/blacklist.model");
+import jwt from "jsonwebtoken";
+import tokenBlacklistModel from "../models/blacklist.model.js";
 
-async function authUser(req, res, next) {
+export async function authUser(req, res, next) {
   const token = req.cookies.token;
 
   if (!token) {
@@ -23,5 +23,3 @@ async function authUser(req, res, next) {
     return res.status(401).json({ message: "Unauthorized. Please try logging in again." });
   }
 }
-
-module.exports = { authUser };
