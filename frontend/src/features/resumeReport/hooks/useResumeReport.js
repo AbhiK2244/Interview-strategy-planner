@@ -1,5 +1,6 @@
 import {
   generateInterviewReport,
+  generateResumePdf,
   getAllInterviewReports,
   getInterviewReportById,
 } from "../services/resumeReport.api";
@@ -9,8 +10,18 @@ import { ResumeReportContext } from "../resumeReport.context";
 import { useParams } from "react-router";
 
 export const useResumeReport = () => {
-  const { loading, setLoading, report, setReport, reports, setReports, loadingReports, setLoadingReports } =
-    useContext(ResumeReportContext);
+  const {
+    loading,
+    setLoading,
+    report,
+    setReport,
+    reports,
+    setReports,
+    loadingReports,
+    setLoadingReports,
+    downloadingResume,
+    setDownloadingResume,
+  } = useContext(ResumeReportContext);
 
   const { interviewId } = useParams();
 
@@ -74,6 +85,26 @@ export const useResumeReport = () => {
     }
   };
 
+  const getResumePdf = async (interviewReportId) => {
+    setDownloadingResume(true);
+    let response = null;
+    try {
+      response = await generateResumePdf({ interviewReportId });
+      const url = window.URL.createObjectURL(
+        new Blob([response], { type: "application/pdf" }),
+      );
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `resume_${interviewReportId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setDownloadingResume(false);
+    }
+  };
+
   useEffect(() => {
     if (interviewId) {
       getReportById(interviewId);
@@ -86,7 +117,10 @@ export const useResumeReport = () => {
     generateReport,
     getAllReports,
     getReportById,
+    getResumePdf,
     loading,
+    loadingReports,
+    downloadingResume,
     report,
     reports,
   };

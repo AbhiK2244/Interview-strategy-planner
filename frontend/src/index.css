@@ -13,7 +13,7 @@
 }
 
 @utility primary-button {
-  @apply px-6 py-2 rounded-xl bg-primary text-white cursor-pointer active:scale-[0.97] transition-all duration-200 ease-in-out;
+  @apply py-2 rounded-xl bg-primary text-white cursor-pointer active:scale-[0.97] transition-all duration-200 ease-in-out;
 }
 
 @layer base {

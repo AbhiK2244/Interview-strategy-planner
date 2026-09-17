@@ -51,3 +51,16 @@ export const getAllInterviewReports = async () => {
   const response = await api.get("/");
   return response.data;
 };
+
+
+/**
+ * @description Generate a resume PDF based on the interview report ID
+ * @param {string} interviewReportId
+ * @returns {Promise<Blob>}
+ */
+export const generateResumePdf = async ({interviewReportId}) => {
+  const response = await api.post(`/resume/pdf/${interviewReportId}`, null, { // null because no body is needed
+    responseType: "blob", // Important for handling binary data
+  });
+  return response.data;
+};
