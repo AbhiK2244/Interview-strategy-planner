@@ -1,4 +1,3 @@
-const pdfParse = require("pdf-parse");
 const {
   generateInterviewReport,
   generateResumePdf,
@@ -12,6 +11,7 @@ const InterviewReportModel = require("../models/interviewReport.model");
  */
 async function generateInterviewReportController(req, res) {
   try {
+    const pdfParse = require("pdf-parse");
     const resumeFile = req.file;
     const resumeContentExtracted = await new pdfParse.PDFParse(
       Uint8Array.from(resumeFile.buffer),
