@@ -56,7 +56,13 @@ async function registerUserController(req, res) {
     );
 
     // set token in cookie
-    res.cookie("token", token);
+    // res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     return res.status(201).json({
       message: "User registered successfully",
@@ -108,7 +114,13 @@ async function loginUserController(req, res) {
     );
 
     // set token in cookie
-    res.cookie("token", token);
+    // res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     return res.status(200).json({
       message: "User logged in successfully",
@@ -119,7 +131,6 @@ async function loginUserController(req, res) {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
-
 
 /**
  * @name logoutUserController
@@ -135,7 +146,12 @@ async function logoutUserController(req, res) {
     if (token) await tokenBlacklistModel.create({ token });
 
     // Clear the token from the cookie
-    res.clearCookie("token");
+    // res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     return res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
@@ -154,7 +170,9 @@ async function getMeController(req, res) {
     // Get the user information from the request object (set by authUser middleware)
     const user = await userModel.findById(req.user.id).select("-password"); // Exclude password from the response
 
-    return res.status(200).json({ user, message: "User information retrieved successfully" });
+    return res
+      .status(200)
+      .json({ user, message: "User information retrieved successfully" });
   } catch (error) {
     console.error("Error getting user information:", error);
     return res.status(500).json({ message: "Internal server error" });
