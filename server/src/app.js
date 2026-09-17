@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: "https://interview-strategy-planner.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
