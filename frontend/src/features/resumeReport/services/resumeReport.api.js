@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/interview",
+  baseURL: "https://interview-strategy-planner-backend.vercel.app/api/interview",
   withCredentials: true,
 });
 
