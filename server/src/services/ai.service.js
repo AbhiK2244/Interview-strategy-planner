@@ -345,6 +345,18 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
   * The HTML is valid and self-contained.
   * The design is professional and suitable for PDF conversion.
   * The final result is stronger and more targeted than the source resume without changing its facts.
+  
+### Handling Conflicting Information
+
+  If information in the Self Description conflicts with or updates information
+  in the Existing Resume, prefer the newer information from the Self Description.
+
+  For example, if the existing resume describes the candidate as a student or
+  undergraduate but the Self Description indicates that the candidate has
+  graduated, use the updated graduation status.
+
+  Do not preserve clearly outdated information simply because it appears in the
+  existing resume.
 
 ### Output Format
 
